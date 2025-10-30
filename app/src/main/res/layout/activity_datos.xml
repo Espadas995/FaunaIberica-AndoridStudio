@@ -1,47 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp">
-    <TextView
-        android:id="@+id/tvTituloDatos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="DATOS"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    <ScrollView
-        android:id="@+id/scrollTexto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloDatos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ivAnimal"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        >
-        <TextView
-            android:id="@+id/tvDatosAnimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:padding="8dp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="16dp" android:gravity="center_horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:background="#FFFFFF">
+    <!--  Botón para volver atrás  -->
+    <Button android:id="@+id/btnAtrasDatos" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="← Atrás" android:textSize="18sp" android:layout_gravity="start" android:layout_marginBottom="16dp"/>
+    <!--  Imagen del animal  -->
+    <ImageView android:id="@+id/imagenAnimal" android:layout_width="250dp" android:layout_height="250dp" android:layout_marginBottom="16dp" android:contentDescription="Imagen del animal"/>
+    <!--  ScrollView para texto largo  -->
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <TextView android:id="@+id/textoAnimal" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="16sp" android:gravity="center" android:padding="8dp" android:scrollbars="vertical"/>
     </ScrollView>
-
-    <ImageView
-        android:id="@+id/ivAnimal"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

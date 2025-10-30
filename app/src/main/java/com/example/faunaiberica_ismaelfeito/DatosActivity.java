@@ -1,9 +1,11 @@
 package com.example.faunaiberica_ismaelfeito;
 
-import android.content.res.AssetManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,62 +15,65 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class DatosActivity extends AppCompatActivity {
-    private TextView tvDatos;
-    private ImageView ivAnimal;
 
-    private String readAssetText(String filename) throws IOException{
-        AssetManager am = getAssets();
-        InputStream is = am.open(filename);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null){
-            sb.append(line).append('\n');
-        }
-        return sb.toString();
-    }
-
+    private Button btnAtrasDatos;
+    private ImageView imagenAnimal;
+    private TextView textoAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datos);
 
-        tvDatos = findViewById(R.id.tvDatosAnimal);
-        ivAnimal = findViewById(R.id.ivAnimal);
+        btnAtrasDatos = findViewById(R.id.btnAtrasDatos);
+        imagenAnimal = findViewById(R.id.imagenAnimal);
+        textoAnimal = findViewById(R.id.textoAnimal);
 
-        String fichero = getIntent().getStringExtra("fichero");
-        String imagenNombre = getIntent().getStringExtra("imagen");
-        if (fichero == null)
-            fichero = "error.txt";
-        if (imagenNombre == null)
-            imagenNombre = "oso";
+        // Recoger datos del Intent
+        Intent intent = getIntent();
+        String fichero = intent.getStringExtra("fichero");
+        String imagen = intent.getStringExtra("imagen");
 
-        String contenido;
-        boolean fileOk = true;
-        try{
-            contenido = readAssetText(fichero);
+        // Cargar imagen siempre
+        int resId = getResources().getIdentifier(imagen, "drawable", getPackageName());
+        if (resId != 0) {
+            imagenAnimal.setImageResource(resId);
+        } else {
+            Toast.makeText(this, "Imagen no encontrada", Toast.LENGTH_SHORT).show();
+        }
+
+        // Leer archivo de texto del assets, si no existe usar error.txt
+        String contenido = leerArchivoSeguro(fichero);
+        textoAnimal.setText(contenido);
+
+        // Botón para volver atrás
+        btnAtrasDatos.setOnClickListener(v -> finish());
+    }
+
+    // Intenta leer el archivo, si falla devuelve error.txt
+    private String leerArchivoSeguro(String nombreArchivo) {
+        try {
+            return leerArchivo(nombreArchivo);
         } catch (IOException e) {
-            fileOk = false;
+            // Intentar con error.txt
             try {
-                contenido = readAssetText("error.txt");
-            } catch (IOException e2){
-                contenido = "Error inesperado al cargar los datos del animal";
+                return leerArchivo("error.txt");
+            } catch (IOException ex) {
+                return "Error: información no disponible";
             }
-            imagenNombre = "oso";
         }
+    }
 
-        tvDatos.setText(contenido);
-
-        int resId = getResources().getIdentifier(imagenNombre, "drawable", getPackageName());
-        if (resId == 0){
-            resId = getResources().getIdentifier("oso", "drawable", getPackageName());
+    // Lector de archivo simple
+    private String leerArchivo(String nombreArchivo) throws IOException {
+        StringBuilder texto = new StringBuilder();
+        InputStream is = getAssets().open(nombreArchivo);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            texto.append(linea).append("\n");
         }
-        ivAnimal.setImageResource(resId);
-
-        if (fileOk)
-            setTitle("Datos");
-        else
-            setTitle("Datos (sin fichero)");
+        br.close();
+        return texto.toString();
     }
 }

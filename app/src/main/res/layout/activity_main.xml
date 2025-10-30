@@ -2,50 +2,104 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity"
     android:padding="16dp">
 
+    <!--    Titulo-->
     <TextView
-        android:id="@+id/tvTitulo"
+        android:id="@+id/titleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Selecciona una categoria"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:text="Fauna Ibérica"
+        android:textColor="#ffffff"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:background="#000000"
+        android:padding="16dp"
+        android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <RadioGroup
-        android:id="@+id/rgCategorias"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--    Subtítulo-->
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar lo que quieres consultar"
+        android:textColor="#000000"
+        android:background="#43A58CD1"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--    Contenedor de opciones-->
+    <LinearLayout
+        android:id="@+id/optionsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp">
-
-        <RadioButton
-            android:id="@+id/rbCarnivoros"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Carnívoros"
-            />
-        <RadioButton
-            android:id="@+id/rbRapaces"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rapaces y carroñeros"/>
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/tvInfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Al seleccionar una opción se abrira la actividad/menú correspondiente"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/rgCategorias"
+        app:layout_constraintTop_toBottomOf="@id/subtitleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:layout_marginTop="50dp">
+
+        <!--    Primera opción / Carnívoros-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <RadioButton
+                android:id="@+id/rbCarnivoros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carnívoros"
+                android:textSize="16sp"
+                android:textColor="#000000"/>
+
+            <ImageView
+                android:id="@+id/imageCarnivoros"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/lince"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+        <!--    Segunda opción / Carroñeros y rapaces-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <RadioButton
+                android:id="@+id/rbRapaces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rapaces y carroñeros"
+                android:textSize="16sp"
+                android:textColor="#000000"/>
+
+            <ImageView
+                android:id="@+id/imageRapaces"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/buitre"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,21 +21,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rgCategorias = findViewById(R.id.rgCategorias);
         rbCarnivoros = findViewById(R.id.rbCarnivoros);
         rbRapaces = findViewById(R.id.rbRapaces);
 
-        rgCategorias.setOnCheckedChangeListener((group, checkedId)->{
-            Intent intent = null;
+        rbCarnivoros.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CarnivorosActivity.class);
+            startActivity(intent);
+            rbCarnivoros.setChecked(false);
+        });
 
-            if (checkedId == R.id.rbCarnivoros)
-                intent = new Intent(MainActivity.this, CarnivorosActivity.class);
-            else if (checkedId == R.id.rbRapaces)
-                intent = new Intent(MainActivity.this, RapacesActivity.class);
-            if (intent != null){
-                startActivity(intent);
-                rgCategorias.clearCheck();
-            }
+        rbRapaces.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RapacesActivity.class);
+            startActivity(intent);
+            rbRapaces.setChecked(false);
         });
     }
 }
