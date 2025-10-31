@@ -31,6 +31,13 @@
             android:exported="false"
             android:excludeFromRecents="true"
             />
+
+        <!-- En el manifest tienes que meter todas las activities nuevas que crees, crack :D -->
+        <activity
+            android:name=".DatosActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            />
     </application>
 
 </manifest>

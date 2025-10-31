@@ -24,23 +24,45 @@ public class RapacesActivity extends AppCompatActivity {
         radioQuebrantahuesos = findViewById(R.id.radioQuebrantahuesos);
         radioBuitre = findViewById(R.id.radioBuitreLeonado);
 
-        radioAguila.setOnClickListener(v -> abrirDatos("aguila.txt", "aguila"));
-        radioBuho.setOnClickListener(v -> abrirDatos("buho.txt", "buho"));
-        radioHalcon.setOnClickListener(v -> abrirDatos("halcon.txt", "halcon"));
-        radioCernicalo.setOnClickListener(v -> abrirDatos("cernicalo.txt", "cernicalo"));
-        radioQuebrantahuesos.setOnClickListener(v -> abrirDatos("quebrantehuesos.txt", "quebrantahuesos"));
-        radioBuitre.setOnClickListener(v -> abrirDatos("buitre.txt", "buitre"));
+        // Cambio de imagenes a ints
+        radioAguila.setOnClickListener(v -> abrirDatos("aguila.txt", R.drawable.aguila));
+        radioBuho.setOnClickListener(v -> abrirDatos("buho.txt", R.drawable.buho));
+        radioHalcon.setOnClickListener(v -> abrirDatos("halcon.txt", R.drawable.halcon));
+        radioCernicalo.setOnClickListener(v -> abrirDatos("cernicalo.txt", R.drawable.cernicalo));
+        radioQuebrantahuesos.setOnClickListener(v -> abrirDatos("quebrantehuesos.txt", R.drawable.quebrantahuesos));
+        radioBuitre.setOnClickListener(v -> abrirDatos("buitre.txt", R.drawable.buitre));
     }
 
-    private void abrirDatos(String fichero, String imagen){
-        try {
-            getAssets().open(fichero).close();
-        } catch (IOException e) {
+    // COPY-PASTE BRUTAL DESDE CARNIVOROS
+    private void abrirDatos(String fichero, int imagen){
+        // Comprobar si el fichero existe en assets (actualizado justo debajo: linea 28)
+        if (!ficheroExiste(fichero)){
             fichero = "error.txt";
+            imagen = R.drawable.oso;
         }
-        Intent intent = new Intent(RapacesActivity.this, DatosActivity.class);
+
+        Intent intent = new Intent(this, DatosActivity.class);
         intent.putExtra("fichero", fichero);
         intent.putExtra("imagen", imagen);
         startActivity(intent);
+    }
+
+    // Comprobar si el fichero existe en assets
+    private boolean ficheroExiste(String ficheroBuscado){
+        try {
+            String[] ficheros = getAssets().list("");
+
+            if (ficheros != null) {
+                for (String fichero : ficheros){
+                    if (fichero.equals(ficheroBuscado)){
+                        return true;
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 }
